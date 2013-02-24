@@ -1,0 +1,17 @@
+#! /usr/bin/env ruby
+
+#This is a simple script, using the cookbook gem.
+#it has a simple menu system and calls standard POSIX compliant system-
+#calls.
+
+require 'cookbook'
+require 'trollop'
+
+if ARGV.empty?
+
+  Cookbook.check
+
+else
+
+  #TODO trollop menu
+end

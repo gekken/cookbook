@@ -1,6 +1,11 @@
 require "cookbook/version"
 require 'cookbook/recipe'
+require 'cookbook/book'
 
 module Cookbook
-  # Your code goes here...
+
+
+  def check
+
+  end
 end

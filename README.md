@@ -1,6 +1,6 @@
 # Cookbook
 
-TODO: Write a gem description
+A simple recipe parsing gem that builds a simple yaml-based cookbook.
 
 ## Installation
 
