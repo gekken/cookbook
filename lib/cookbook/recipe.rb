@@ -1,29 +1,29 @@
-require 'cookbook'
+module Cookbook
 
+  class Recipe
 
-class Recipe
+    attr_accessor :file_name
 
-  attr_accessor :file_name
+    def initialize filename
 
-  def initialize filename
+      @file_name = filename
 
-    @file_name = filename
+    end
 
-  end
+    def edit
 
-  def edit
+    end
 
-  end
+    def delete
 
-  def delete
+    end
 
-  end
+    def search
 
-  def search
+    end
 
-  end
+    def show
 
-  def show
-
+    end
   end
 end
