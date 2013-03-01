@@ -10,9 +10,11 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'rb-inotify'
   gem 'trollop'
+  gem 'colorize'
 end
 
 
 group :production do
   gem 'trollop'
+  gem 'colorize'
 end

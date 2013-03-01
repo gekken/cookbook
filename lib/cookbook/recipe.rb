@@ -2,11 +2,11 @@ module Cookbook
 
   class Recipe
 
-    attr_accessor :file_name
+    attr_accessor :name
 
-    def initialize filename
+    def initialize recipe_name
+      @name = recipe_name
 
-      @file_name = filename
 
     end
 

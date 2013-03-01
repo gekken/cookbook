@@ -3,15 +3,69 @@
 #This is a simple script, using the cookbook gem.
 #it has a simple menu system and calls standard POSIX compliant system-
 #calls.
+$: << "../lib"
 
 require 'cookbook'
 require 'trollop'
 
-if ARGV.empty?
 
-  Cookbook.check
+if RUBY_PLATFORM =~ /linux/
+
+  config_path = File.path "/home/#{ENV['USER']}/.config/cookbook"
+
+elsif RUBY_PLATFORM =~ /darwin/
+
+  config_path = File.path(FileUtils.mkdir_p("/home/#{ENV['USER']}/.config/cookbook"))
+
+elsif RUBY_PLATFORM =~ /win/
+
+  config_path = File.path "C:/Users/#{ENV['USERNAME']}/Documents/Cookbook"
 
 else
 
-  #TODO trollop menu
+  raise 'This gem only supports Linux, Mac, and Windows (because I have no idea how to run "BeOS" or "Minix")'
+
+end
+
+if ARGV.empty?
+
+  Cookbook.check config_path
+
+
+else
+
+  opts = Trollop::options do
+    banner <<-eos
+    Welcome to The Cookbook, the best (only) cookbook gem (that I know of) for coders that cook
+
+    The CLI switches below are only for speed. The entire application can be run from 'cookbook'
+    ___________________________________________________________________________________________
+    eos
+
+    opt :init, "Initialize a config file, and a place to store your cookbooks and recipes",
+        short: 'i'
+
+    opt :newcookbook, 'Create a new cookbook called <cookbook name>',
+        short: 'b',
+        type: String
+
+    opt :newrecipe, 'Create a new recipe called <recipe name>',
+        short: 'n',
+        type: String
+  end
+
+  if opts[:init]
+    Cookbook.init config_path
+  end
+
+  if opts[:newcookbook]
+    name = opts[:newcookbook]
+    Cookbook::Book.new config_path name
+  end
+
+  if opts[:newrecipe]
+    name = opts[:newrecipe]
+    Cookbook::Recipe.new  config_path name
+  end
+
 end

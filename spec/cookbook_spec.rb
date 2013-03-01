@@ -1,14 +1,12 @@
+require 'spec_helper'
 require 'cookbook'
 require 'rspec'
 
+FILEPATH = File.path("/home/#{ENV['USER']}/.config/cookbook")
+
 describe Cookbook do
 
-  describe '#check' do
-    it 'checks to see if a config file exists'
-    it 'checks to see if a cookbook exists'
-  end
+  it 'should detect the OS'
 
-  describe '#init' do
-    it 'creates a config file'
-  end
+
 end
