@@ -11,11 +11,11 @@ require 'trollop'
 
 if RUBY_PLATFORM =~ /linux/
 
-  config_path = File.path "/home/#{ENV['USER']}/.config/cookbook"
+  config_path = File.expand_path "~/.config/cookbook"
 
 elsif RUBY_PLATFORM =~ /darwin/
 
-  config_path = File.path(FileUtils.mkdir_p("/home/#{ENV['USER']}/.config/cookbook"))
+  config_path = File.path(FileUtils.mkdir_p("~/.config/cookbook"))
 
 elsif RUBY_PLATFORM =~ /win/
 
@@ -65,7 +65,7 @@ else
 
   if opts[:newrecipe]
     name = opts[:newrecipe]
-    Cookbook::Recipe.new  config_path name
+    Cookbook::Recipe.new config_path name
   end
 
 end

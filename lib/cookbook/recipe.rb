@@ -2,28 +2,42 @@ module Cookbook
 
   class Recipe
 
-    attr_accessor :name
+    attr_accessor :name, :ingredients, :units, :amounts, :directions
 
-    def initialize recipe_name
+    def initialize(recipe_name, ingredients, units, amounts, directions)
       @name = recipe_name
-
-
+      @ingredients = ingredients
+      @units = units
+      @amounts = amounts
+      @directions = directions
     end
 
-    def edit
-
+    def parsed
+      amts = @amounts.zip @units
+      Hash[@ingredients.zip amts]
     end
 
-    def delete
-
+    def save name
+      Cookbook::Book("").add_recipe
     end
 
-    def search
 
-    end
+  end
 
-    def show
+  def edit
 
-    end
+  end
+
+  def delete
+
+  end
+
+  def search name
+    name
+  end
+
+  def show
+
+
   end
 end
