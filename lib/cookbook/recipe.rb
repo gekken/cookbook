@@ -14,30 +14,37 @@ module Cookbook
 
     def parsed
       amts = @amounts.zip @units
-      Hash[@ingredients.zip amts]
+      goods = Hash[@ingredients.zip amts]
+      goods['name'] = @name
+      goods
     end
 
-    def save name
-      Cookbook::Book("").add_recipe
+    def save to_book
+      begin
+        File.open("#{Cookbook.storage_path}/#{to_book}", 'r+') do |f|
+          f << (self.parsed).to_yaml
+        end
+      rescue
+        puts "There doesn't appear to be a cookbook called #{to_book}"
+      end
     end
 
 
-  end
+    def edit
 
-  def edit
+    end
 
-  end
+    def delete
 
-  def delete
+    end
 
-  end
+    def search name
+      name
+    end
 
-  def search name
-    name
-  end
-
-  def show
+    def show
 
 
+    end
   end
 end

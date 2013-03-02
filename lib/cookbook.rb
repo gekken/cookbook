@@ -1,9 +1,12 @@
-$: << __FILE__
+$:.unshift File.expand_path('../lib', __FILE__)
 
-require 'cookbook/version'
-require 'cookbook/recipe'
-require 'cookbook/book'
+
+require_relative 'cookbook/version'
+require_relative 'cookbook/book'
+require_relative 'cookbook/recipe'
+
 require 'colorize'
+require 'yaml'
 
 module Cookbook
 
@@ -38,6 +41,7 @@ module Cookbook
 
   def self.init path
     system('clear')
+
     puts "\n\n\tWe will be writing a config file called 'cookbook.yml' to"
     puts "\t#{path}".green
     puts <<HERE
@@ -49,15 +53,19 @@ HERE
     print "\tBut that is up to you.\n\tNow first, with whom am I speaking? "
     @name = gets.chomp
     system('clear')
+
     if @name.downcase != @user
       puts "\n\n\n\t\tYOU LIE!".yellow
       sleep 2
     end
+
     puts "\n\n\tOutstanding, #{@name.capitalize}; now, what is your preferred unit of measurement?"
     print "\tPlease enter
         'I' for Imperial (cups, fahrenheit, tablespoons) or
         'M' for Metric (liters, centigrade, grams): "
+
     @unit = gets.upcase.chomp
+
     system('clear')
     puts "\n\n\tSuper."
     puts "\tDo you want us to store your recipes in #{self.storage_path}?"

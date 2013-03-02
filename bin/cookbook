@@ -11,15 +11,15 @@ require 'trollop'
 
 if RUBY_PLATFORM =~ /linux/
 
-  config_path = File.expand_path "~/.config/cookbook"
+  $config_path = File.expand_path "~/.config/cookbook"
 
 elsif RUBY_PLATFORM =~ /darwin/
 
-  config_path = File.path(FileUtils.mkdir_p("~/.config/cookbook"))
+  $config_path = File.path(FileUtils.mkdir_p("~/.config/cookbook"))
 
 elsif RUBY_PLATFORM =~ /win/
 
-  config_path = File.path "C:/Users/#{ENV['USERNAME']}/Documents/Cookbook"
+  $config_path = File.path "C:/Users/#{ENV['USERNAME']}/Documents/Cookbook"
 
 else
 
@@ -29,7 +29,7 @@ end
 
 if ARGV.empty?
 
-  Cookbook.check config_path
+  Cookbook.check $config_path
 
 
 else
@@ -55,17 +55,17 @@ else
   end
 
   if opts[:init]
-    Cookbook.init config_path
+    Cookbook.init $config_path
   end
 
   if opts[:newcookbook]
     name = opts[:newcookbook]
-    Cookbook::Book.new config_path name
+    Cookbook::Book.new $config_path name
   end
 
   if opts[:newrecipe]
     name = opts[:newrecipe]
-    Cookbook::Recipe.new config_path name
+    #Cookbook::Recipe.new @config_path name
   end
 
 end

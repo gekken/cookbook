@@ -1,51 +1,27 @@
 require "rspec"
 require 'cookbook'
-require 'spec_helper'
+require_relative '../spec_helper'
 
 
 describe "Cookbook::Book" do
 
-  @ingredients = ['Aleppo pepper',
-                  'extra-virgin olive oil',
-                  'red wine vinegar',
-                  'tomato paste', 'coarse kosher salt',
-                  'freshly ground black pepper',
-                  'loves garlic, peeled, flattened',
-                  'unpeeled lemons; 1 thinly sliced into rounds, 1 cut into wedges for serving',
-                  'skinless boneless chicken (thighs and/or breast halves), cut into 1 1/4-inch cubes']
-
-  $ingredients = ['Aleppo pepper',
-                  'extra-virgin olive oil',
-                  'red wine vinegar',
-                  'tomato paste', 'coarse kosher salt',
-                  'freshly ground black pepper',
-                  'loves garlic, peeled, flattened',
-                  'unpeeled lemons; 1 thinly sliced into rounds, 1 cut into wedges for serving',
-                  'skinless boneless chicken (thighs and/or breast halves), cut into 1 1/4-inch cubes']
-
-  @units = ['tablespoons', 'cup', 'tablespoons', 'tablespoons', 'tablespoons', 'teaspoons', 'teaspoons', '', '', 'Pounds']
-
-  @directions = "throw it in a pot and stir. Serve lukewarm with flat beer"
-
-  @amounts = [1.5, 3, 2, 2, 2, 1, 6, 2, 2.25]
-
-  $recipe = Cookbook::Recipe.new('aleppo chicken', @ingredients, @units, @amounts, @directions)
-
-  subject { Cookbook::Book.new 'name' }
+  $name = (0...8).map{(65+rand(26)).chr}.join
+  subject { Cookbook::Book.new $name, 'argle barlge' }
 
   context "#new" do
     it "should have a name" do
 
-      subject.name.should == 'name'
+      subject.name.should == $name
+      puts "name = #{$name}"
     end
 
     it 'if not supplied a description it should have the default value' do
-      subject.description.should == "a cookbook"
+      other = Cookbook::Book.new('other')
+      other.description.should == "a cookbook"
     end
 
     it 'if supplied a description it should return the correct one' do
-      book = Cookbook::Book.new 'name', 'argle barlge'
-      book.description.should == 'argle barlge'
+      subject.description.should == 'argle barlge'
     end
 
 
@@ -56,18 +32,19 @@ describe "Cookbook::Book" do
       subject.list.empty?.should be_true
     end
 
+
     it 'if we insert recipes it should return them' do
 
-      subject.add_recipe $recipe
-      subject.list.should include $recipe
+      subject.add_recipe Test_recipe
+      subject.list.should include Test_recipe
     end
 
   end
 
   context '#add_recipe' do
     it 'adds a recipe object' do
-      subject.add_recipe($recipe)
-      subject.list.should include $recipe
+      subject.add_recipe(Test_recipe)
+      subject.list.should include Test_recipe
     end
 
     it 'does not accept a string' do
@@ -75,6 +52,19 @@ describe "Cookbook::Book" do
       subject.add_recipe recipe
       subject.list.should_not include recipe
     end
+  end
+
+
+    context "#save" do
+     it 'should write a file to the path set in init' do
+     result = File.exist?("#{subject}")
+      subject.save.should_not == result
+     end
+
+      it 'should write the description on the top line' do
+      #expected = File.open("#{Cookbook.storage_path}/#{$name}", &:readline)
+      #TODO stumped. I know it works, but testing it appears circular.
+      end
+       end
 
   end
-end
